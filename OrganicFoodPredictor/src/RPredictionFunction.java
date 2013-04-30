@@ -1,5 +1,7 @@
 
 import java.io.IOException;
+import java.util.ArrayList;
+
 import rcaller.*;
 
 /**
@@ -11,6 +13,13 @@ public class RPredictionFunction {
 
 	//@SuppressWarnings("deprecation")
 
+	RCaller caller;
+	RCode code;
+	public RPredictionFunction(RCaller caller,RCode code)
+	{
+		this.caller = caller;
+		this.code = code;
+	}
 	/**
 	 * 
 	 * @param newFarm = new farm land for prediction
@@ -20,21 +29,14 @@ public class RPredictionFunction {
 	 * @return
 	 */
 	public String calculatePrediction(String newFarm,String newRain,String newTemp,String newIncome){
-	
-		RCaller caller = new RCaller();
-		RCode code = new RCode();	
 		
-		//caller.setRscriptExecutable("C:\\Program Files\\R\\R-2.15.2\\bin\\Rscript.exe");
-		caller.setRscriptExecutable("/usr/bin/Rscript");
-		code.clear();
-		caller.cleanRCode();
-		//code.addRCode("data <- read.csv(\"C:\\Users\\Saurabh\\Downloads\\mastersheet.csv\")");
-		code.addRCode("data <- read.csv(\"/Users/palloabhi/Downloads/mastersheet.csv\")");
+		
 		code.addRCode("Farmland<-data$Farmland");
 		code.addRCode("Farmland<-data$Farmland");
 		code.addRCode("Rain<-data$Rain");
 		code.addRCode("Temperature<-data$Temperature");
 		code.addRCode("Sales<- data$Sales");
+		code.addRCode("Year<-data$Year");
 		code.addRCode("Income<-data$Income");
 		code.addRCode("fit <- lm(Sales ~ Farmland + Rain + Temperature + Income)");
 		code.addRCode("newfarm <-"+ newFarm);
@@ -54,13 +56,6 @@ public class RPredictionFunction {
 	
 	public String farmTimeSeries() throws IOException{
 		
-		RCaller caller = new RCaller();
-		RCode code = new RCode();	
-		//caller.setRscriptExecutable("C:\\Program Files\\R\\R-2.15.2\\bin\\Rscript.exe");
-		caller.setRscriptExecutable("/usr/bin/Rscript");
-		code.clear();
-		caller.cleanRCode();
-		code.addRCode("data <- read.csv(\"/Users/palloabhi/Downloads/mastersheet.csv\")");
 		code.addRCode("fit <- arima(data$Farmland, order=c(1,0,0), list(order=c(2,1,0), period=1))");
 		code.addRCode("fore <- predict(fit, n.ahead=1)");
 		code.addRCode("fore$pred[1]");
@@ -73,13 +68,6 @@ public class RPredictionFunction {
 	
 	public String rainTimeSeries(){
 		
-		RCaller caller = new RCaller();
-		RCode code = new RCode();	
-		//caller.setRscriptExecutable("C:\\Program Files\\R\\R-2.15.2\\bin\\Rscript.exe");
-		caller.setRscriptExecutable("/usr/bin/Rscript");
-		code.clear();
-		//code.addRCode("data <- read.csv(\"C:\\Users\\Saurabh\\Downloads\\mastersheet.csv\")");
-		code.addRCode("data <- read.csv(\"/Users/palloabhi/Downloads/mastersheet.csv\")");
 		code.addRCode("fit <- arima(data$Rain, order=c(1,0,0), list(order=c(2,1,0), period=1))");
 		code.addRCode("fore <- predict(fit, n.ahead=1)");
 		code.addRCode("fore$pred[1]");
@@ -92,13 +80,6 @@ public class RPredictionFunction {
 	
 	public String temperatureTimeSeries(){
 
-		RCaller caller = new RCaller();
-		RCode code = new RCode();	
-		//caller.setRscriptExecutable("C:\\Program Files\\R\\R-2.15.2\\bin\\Rscript.exe");
-		caller.setRscriptExecutable("/usr/bin/Rscript");
-		code.clear();
-		//code.addRCode("data <- read.csv(\"C:\\Users\\Saurabh\\Downloads\\mastersheet.csv\")");
-		code.addRCode("data <- read.csv(\"/Users/palloabhi/Downloads/mastersheet.csv\")");
 		code.addRCode("fit <- arima(data$Temperature, order=c(1,0,0), list(order=c(2,1,0), period=1))");
 		code.addRCode("fore <- predict(fit, n.ahead=1)");
 		code.addRCode("fore$pred[1]");
@@ -111,13 +92,6 @@ public class RPredictionFunction {
 
 	public String incomeTimeSeries(){
 
-		RCaller caller = new RCaller();
-		RCode code = new RCode();
-		//caller.setRscriptExecutable("C:\\Program Files\\R\\R-2.15.2\\bin\\Rscript.exe");
-		caller.setRscriptExecutable("/usr/bin/Rscript");
-		code.clear();
-		//code.addRCode("data <- read.csv(\"C:\\Users\\Saurabh\\Downloads\\mastersheet.csv\")");
-		code.addRCode("data <- read.csv(\"/Users/palloabhi/Downloads/mastersheet.csv\")");
 		code.addRCode("fit <- arima(data$Income, order=c(1,0,0), list(order=c(2,1,0), period=1))");
 		code.addRCode("fore <- predict(fit, n.ahead=1)");
 		code.addRCode("fore$pred[1]");
@@ -129,4 +103,5 @@ public class RPredictionFunction {
 		
 
 	}
+	
 }
