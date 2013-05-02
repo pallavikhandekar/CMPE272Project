@@ -1,0 +1,16 @@
+{
+    "contents" : "library(shiny)\n\nshinyUI(pageWithSidebar(\n  \n  # Application title\n  headerPanel(\"Organic Food Sales Prediction\"),\n  \n  sidebarPanel( \n   selectInput(\"farmLand\", \"Farmland\",list(\"test\")),\n   selectInput(\"rain\", \"Rain\",list(\"test\")),\n   selectInput(\"income\", \"Income\",list(\"test\")),\n   selectInput(\"temperature\", \"Temperature\",list(\"test\")),\n   br(),\n   submitButton(\"Predict\")\n  ),\n  \n  mainPanel(\n    htmlOutput('View')\n    )\n))",
+    "created" : 1367476222805.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3958520312",
+    "id" : "1028E240",
+    "lastKnownWriteTime" : 1367479554,
+    "path" : "~/OrganicFoodPredictionSystem/UI.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "source_on_save" : false,
+    "type" : "r_source"
+}

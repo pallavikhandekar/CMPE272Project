@@ -1,0 +1,16 @@
+{
+    "contents" : "library(shiny)\nlibrary(googleVis)\n# Define server logic required to plot various variables against mpg\nshinyServer(function(input, output) {\n  #data <- read.csv(\"/Users/palloabhi/Downloads/mastersheet.csv\")\n  #sales<-data$Sales\n  #years<-data$Year\n  #df<-data.frame(X=sales,Y=years)\n  #output$dfPlot <- renderPlot({\n  #  plot(df);\n  #})\n  \n  data <- read.csv(\"/Users/palloabhi/Downloads/mastersheet.csv\")\n  organicPrediction<-function(x=farmTimeSeries(),y=rainTimeSeries(),z=temperatureTimeSeries(),w=incomeTimeSeries()){\n    Farmland<-data$Farmland\n    Rain<-data$Rain\n    Temperature<-data$Temperature\n    Sales<- data$Sales\n    Income<-data$Income\n    fit <- lm(Sales ~ Farmland + Rain + Temperature + Income)\n    newfarm<-x\n    newrain<-y\n    newtemp<-z\n    newincome<-w\n    newdata<-data.frame(Farmland=newfarm,Rain=newrain,Temperature=newtemp,Income=newincome)\n    newsales<-predict(fit,newdata=newdata)\n    return (newsales)\n  }\n  \n  farmTimeSeries<-function(){\n    \n    fit <- arima(data$Farmland, order=c(1,0,0), list(order=c(2,1,0), period=1))\n    fore <- predict(fit, n.ahead=1)\n    return (fore$pred)\n  }\n  \n  rainTimeSeries<-function(){\n    \n    fit <- arima(data$Rain, order=c(1,0,0), list(order=c(2,1,0), period=1))\n    fore <- predict(fit, n.ahead=1)\n    return (fore$pred)\n  }\n  \n  temperatureTimeSeries<-function(){\n   \n    fit <- arima(data$Temperature, order=c(1,0,0), list(order=c(2,1,0), period=1))\n    fore <- predict(fit, n.ahead=1)\n    return (fore$pred)\n  }\n  \n  incomeTimeSeries<-function(){\n   \n    fit <- arima(data$Income, order=c(1,0,0), list(order=c(2,1,0), period=1))\n    fore <- predict(fit, n.ahead=1)\n    return (fore$pred)\n  }\n  \n  predictedSales<-organicPrediction()\n  Sales<-union(data$Sales,predictedSales)\n  Year<-union(data$Year,c(2013))\n  \n  df<-data.frame(X=Year,Y=Sales)\n  \n  output$View <- renderGvis({\n    gvisScatterChart(df,options=list(legend='none', width=1000,height=500))\n  })\n  \n})",
+    "created" : 1367476063290.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "973180929",
+    "id" : "12634DFA",
+    "lastKnownWriteTime" : 1367478047,
+    "path" : "~/OrganicFoodPredictionSystem/server.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "source_on_save" : false,
+    "type" : "r_source"
+}
