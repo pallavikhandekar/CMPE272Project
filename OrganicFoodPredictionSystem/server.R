@@ -10,8 +10,90 @@ shinyServer(function(input, output) {
   #  plot(df);
   #})
   
-  data <- read.csv("/Users/palloabhi/Downloads/mastersheet.csv")
-  organicPrediction<-function(x=farmTimeSeries(),y=rainTimeSeries(),z=temperatureTimeSeries(),w=incomeTimeSeries()){
+  data <- read.csv("C:/Users/Saurabh/Downloads/mastersheet.csv")
+  
+  organicPrediction<-function(x,y,z,w){
+    if(x=="0"){
+      x=farmTimeSeries()
+    }
+    if(x=="-10%"){
+      x=farmTimeSeries()
+      x<-x-(x/10)
+    }
+    if(x=="-5%"){
+      x=farmTimeSeries()
+      x<-x-(x/20)
+    }
+    if(x=="+5%"){
+      x=farmTimeSeries()
+      x<-x+(x/20)
+    }
+    if(x=="+10%"){
+      x=farmTimeSeries()
+      x<-x+(x/10)
+    }
+    
+    if(w=="0"){
+      w=incomeTimeSeries()
+    }
+    if(w=="-10%"){
+      w=incomeTimeSeries()
+      w<-w-(w/10)
+    }
+    if(w=="-5%"){
+      w=incomeTimeSeries()
+      w<-w-(w/20)
+    }
+    if(w=="+5%"){
+      w=incomeTimeSeries()
+      w<-w+(w/20)
+    }
+    if(w=="+10%"){
+      w=incomeTimeSeries()
+      w<-w+(w/10)
+    }
+    
+    if(y=="0"){
+      y=rainTimeSeries()
+    }
+    if(y=="-10%"){
+      y=rainTimeSeries()
+      y<-y-(y/10)
+    }
+    if(y=="-5%"){
+      y=rainTimeSeries()
+      y<-y-(y/20)
+    }
+    if(y=="+5%"){
+      y=rainTimeSeries()
+      y<-y+(y/20)
+    }
+    if(y=="+10%"){
+      y=rainTimeSeries()
+      y<-y+(y/10)
+    }
+    
+    if(z=="0"){
+      z=temperatureTimeSeries()
+    }
+    if(z=="-10%"){
+      z=temperatureTimeSeries()
+      z<-z-(z/10)
+    }
+    if(z=="-5%"){
+      z=temperatureTimeSeries()
+      z<-z-(z/20)
+    }
+    if(z=="+5%"){
+      z=temperatureTimeSeries()
+      z<-z+(z/20)
+    }
+    if(z=="+10%"){
+      z=temperatureTimeSeries()
+      z<-z+(z/10)
+    }
+    
+    
     Farmland<-data$Farmland
     Rain<-data$Rain
     Temperature<-data$Temperature
@@ -24,7 +106,11 @@ shinyServer(function(input, output) {
     newincome<-w
     newdata<-data.frame(Farmland=newfarm,Rain=newrain,Temperature=newtemp,Income=newincome)
     newsales<-predict(fit,newdata=newdata)
-    return (newsales)
+    Sales<-union(data$Sales,newsales)
+    Year<-union(data$Year,c(2013))
+    
+    df<-data.frame(X=Year,Y=Sales)
+    return (df)
   }
   
   farmTimeSeries<-function(){
@@ -55,14 +141,8 @@ shinyServer(function(input, output) {
     return (fore$pred)
   }
   
-  predictedSales<-organicPrediction()
-  Sales<-union(data$Sales,predictedSales)
-  Year<-union(data$Year,c(2013))
-  
-  df<-data.frame(X=Year,Y=Sales)
-  
   output$View <- renderGvis({
-    gvisScatterChart(df,options=list(legend='none', width=1000,height=500))
+    gvisScatterChart(organicPrediction(input$Farmland,input$Rain,input$Temperature,input$Income),options=list(legend='none', width=1000,height=500))
   })
   
 })

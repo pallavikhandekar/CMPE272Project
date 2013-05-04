@@ -6,15 +6,15 @@ shinyUI(pageWithSidebar(
   headerPanel("Organic Food Sales Prediction"),
   
   sidebarPanel( 
-   selectInput("farmLand", "Farmland",list("test")),
-   selectInput("rain", "Rain",list("test")),
-   selectInput("income", "Income",list("test")),
-   selectInput("temperature", "Temperature",list("test")),
-   br(),
-   submitButton("Predict")
+   selectInput("Farmland", "Farmland",list("-10%","-5%","0","+5%","+10%"),selected="0"),
+   selectInput("Rain", "Rain",list("-10%","-5%","0","+5%","+10%"),selected="0"),
+   selectInput("Income", "Income",list("-10%","-5%","0","+5%","+10%"),selected="0"),
+   selectInput("Temperature", "Temperature",list("-10%","-5%","0","+5%","+10%"),selected="0"),
+   br()
   ),
   
+    
   mainPanel(
-    htmlOutput('View')
+    htmlOutput("View")
     )
 ))

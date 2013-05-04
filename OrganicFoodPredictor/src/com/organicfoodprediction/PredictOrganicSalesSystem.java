@@ -25,10 +25,10 @@ public class PredictOrganicSalesSystem {
 		RCaller caller = new RCaller();
 		RCode code = new RCode();
 		code.clear();
-		//caller.setRscriptExecutable("C:\\Program Files\\R\\R-2.15.2\\bin\\Rscript.exe");
-		//code.addRCode("data <- read.csv(\"C:\\Users\\Saurabh\\Downloads\\mastersheet.csv\")");
-		code.addRCode("data <- read.csv(\"/Users/palloabhi/Downloads/mastersheet.csv\")");
-		caller.setRscriptExecutable("/usr/bin/Rscript");
+		caller.setRscriptExecutable("C:\\Program Files\\R\\R-2.15.2\\bin\\Rscript.exe");
+		code.addRCode("data <- read.csv(\"C:\\Users\\Saurabh\\Downloads\\mastersheet.csv\")");
+		//code.addRCode("data <- read.csv(\"/Users/Saurabh/Downloads/mastersheet.csv\")");
+		//caller.setRscriptExecutable("/usr/bin/Rscript");
 		caller.cleanRCode();
 		
 		RPredictionFunction objRPredictionFunction =
@@ -75,10 +75,10 @@ public class PredictOrganicSalesSystem {
 		RCaller caller = new RCaller();
 		RCode code = new RCode();
 		code.clear();
-		//caller.setRscriptExecutable("C:\\Program Files\\R\\R-2.15.2\\bin\\Rscript.exe");
-		//code.addRCode("data <- read.csv(\"C:\\Users\\Saurabh\\Downloads\\mastersheet.csv\")");
-		code.addRCode("data <- read.csv(\"/Users/palloabhi/Downloads/mastersheet.csv\")");
-		caller.setRscriptExecutable("/usr/bin/Rscript");
+		caller.setRscriptExecutable("C:\\Program Files\\R\\R-2.15.2\\bin\\Rscript.exe");
+		code.addRCode("data <- read.csv(\"C:\\Users\\Saurabh\\Downloads\\mastersheet.csv\")");
+		//code.addRCode("data <- read.csv(\"/Users/palloabhi/Downloads/mastersheet.csv\")");
+		//caller.setRscriptExecutable("/usr/bin/Rscript");
 		caller.cleanRCode();
 		
 		RPredictionFunction objRPredictionFunction =
